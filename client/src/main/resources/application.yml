@@ -1,0 +1,47 @@
+server:
+  port: 9091
+
+management:
+  endpoint:
+    web.exposure.include: "*"
+    dubbo.enabled: true
+    dubbo-shutdown.enabled: true
+    dubbo-services.enabled: true
+    dubbo-references.enabled: true
+    dubbo-properties.enabled: true
+  health:
+    dubbo.status.defaults: memory
+
+spring:
+  application:
+    name: person.client
+  boot:
+    admin:
+      client:
+        instance:
+          prefer-ip: true
+        url: http://localhost:8080/
+health:
+  enabled: true
+  show-details: ALWAYS
+
+dubbo:
+  application:
+    id: person.client
+    name: person.client
+    version: 1.0
+    registry:
+      id: person.client
+      address: zookeeper://localhost:2181/
+    qos-port: 22223
+  consumer:
+    check: true
+    retries: 2
+    timeout: 2000
+  scan:
+    base-packages: org.jackson.dubbo.client.api
+endpoints:
+  dubbo.enabled: true
+
+
+

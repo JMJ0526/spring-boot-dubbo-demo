@@ -1,0 +1,46 @@
+server:
+  port: 9090
+spring:
+  application:
+    name: person.service
+  boot:
+    admin:
+      client:
+        url: http://localhost:8080/
+        instance:
+          prefer-ip: true
+dubbo:
+  application:
+    id: person.service
+    name: person.service
+    version: 1.0
+    registry:
+      id: person.service
+      address: zookeeper://localhost:2181
+    qos-enable: true
+    qos-port: 22222
+  protocol:
+    name: dubbo
+    id: dubbo
+    status: server
+    port: 20880
+  provider:
+    retries: 0
+  scan:
+    base-packages: org.jackson.dubbo.provider.impl
+management:
+  endpoint:
+    web.exposure.include: "*"
+    dubbo.enabled: true
+    dubbo-shutdown.enabled: true
+    dubbo-services.enabled: true
+    dubbo-configs.enabled: true
+    dubbo-references.enabled: true
+    dubbo-properties.enabled: true
+  health:
+    dubbo.status.defaults: memory
+    dubbo.status.extras: load,threadpool
+
+health:
+  enabled: true
+  show-details: ALWAYS
